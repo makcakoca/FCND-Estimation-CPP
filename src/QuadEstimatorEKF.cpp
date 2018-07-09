@@ -94,8 +94,6 @@ void QuadEstimatorEKF::UpdateFromIMU(V3F accel, V3F gyro)
   // make sure you comment it out when you add your own code -- otherwise e.g. you might integrate yaw twice
   float predictedRollDot, predictedPitchDot, predictedYawDot;
 
-
-
   predictedRollDot = gyro.x + tan(pitchEst)*sin(rollEst)*gyro.y + tan(pitchEst)*cos(rollEst)*gyro.z;
   predictedPitchDot = cos(rollEst)*gyro.y - sin(rollEst) * gyro.z;
   predictedYawDot = (sin(rollEst)/cos(pitchEst))*gyro.y + (cos(rollEst)/cos(pitchEst))*gyro.z;

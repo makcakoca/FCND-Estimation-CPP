@@ -235,13 +235,17 @@ V3F QuadControl::LateralPositionControl(V3F posCmd, V3F velCmd, V3F pos, V3F vel
 
   velCmdFilt = kpPosXY * (posCmd - pos) + velCmd;
 
-  velCmdFilt.x = CONSTRAIN(velCmdFilt.x, -maxSpeedXY, maxSpeedXY);
-  velCmdFilt.y = CONSTRAIN(velCmdFilt.y, -maxSpeedXY, maxSpeedXY);
+  if(velCmdFilt.mag() > maxSpeedXY)
+  {
+      velCmdFilt *= maxSpeedXY / velCmdFilt.mag();
+  }
 
   accelCmd = kpVelXY * (velCmdFilt - vel) + accelCmdFF;
 
-  accelCmd.x = CONSTRAIN(accelCmd.x, -maxAccelXY, maxAccelXY);
-  accelCmd.y = CONSTRAIN(accelCmd.y, -maxAccelXY, maxAccelXY);
+  if(accelCmd.mag() > maxAccelXY)
+  {
+      accelCmd *= maxAccelXY / accelCmd.mag();
+  }
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   return accelCmd;
